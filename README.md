@@ -25,10 +25,14 @@ y <- c(100, 95, 70, 90, 90, 90, 89, 90, 100)
 diff <- x-y
 sd(diff)
 ```
+![image](https://user-images.githubusercontent.com/95208578/207116685-51722b90-6c0c-4dda-b985-18eaeba8406b.png)
+
 >B. Carilah nilai t (p-value)
 ```R
 t.test(y, x, paired = TRUE)
 ```
+![image](https://user-images.githubusercontent.com/95208578/207116880-5153f9b0-2976-4556-96d8-7804bda1e94f.png)
+
 
 >C. Tentukanlah apakah terdapat pengaruh yang signifikan secara statistika
 dalam hal kadar saturasi oksigen , sebelum dan sesudah melakukan
@@ -37,7 +41,7 @@ pengaruh yang signifikan secara statistika dalam hal kadar saturasi
 oksigen , sebelum dan sesudah melakukan aktivitas 𝐴”
 
 `
-Berdasarkan hasil dari poin sebelumnya, diketahui bahwa nilai probabilitas dari uji 𝑡 (p-value) adalah 6.003e-05 atau 0.00006003. Karena nilai probabilitas tersebut lebih kecil dibandingkan tingkat signifikansi 𝛼 = 0.05, maka hipotesis nol ditolak dan hipotesis alternatif diterima.
+Dari hasil dari poin B, diketahui bahwa nilai dari uji 𝑡 (p-value) adalah 6.003e-05 atau 0.00006003. Karena nilai probabilitas tersebut lebih kecil dibandingkan tingkat signifikansi 𝛼 = 0.05, maka menolak hipotesis nol dan hipotesis satu diterima.
 Hal ini berarti terdapat pengaruh yang signifikan secara statistika dalam hal kadar saturasi oksigen, sebelum dan sesudah melakukan aktivitas 𝐴 pada tingkat signifikansi 5%.
 `
 
@@ -56,6 +60,8 @@ Fungsi yang digunakan adalah fungsi tsum.test() dengan parameter-parameter yang 
 ```
 tsum.test(mean.x = 23500, s.x = 3900, n.x = 100)
 ```
+![image](https://user-images.githubusercontent.com/95208578/207119868-2209874e-8bd4-4abd-bb47-ff5d5c043942.png)
+
 >C. Buatlah kesimpulan berdasarkan P-Value yang dihasilkan!
 
 `
@@ -88,6 +94,8 @@ tsum.test(mean.x=3.64, s.x = 1.67, n.x = 19,
           mu = 0, var.equal = TRUE,
           conf.level = 0.90)
 ```
+![image](https://user-images.githubusercontent.com/95208578/207120749-b4cb15c5-1bdf-4a2f-91af-54ccbccd1f5b.png)
+
 
 >C. Lakukan Uji Statistik (df =2)
 ```R
@@ -96,10 +104,14 @@ library(mosaic)
 
 plotDist(dist = 't', df = 2, col = "blue")
 ```
+![image](https://user-images.githubusercontent.com/95208578/207121132-5fdacc44-46a4-4cfe-bf15-502af61de415.png)
+
 >D. Nilai Kritikal
 ```R
 qchisq(p = 0.05, df = 2, lower.tail = FALSE)
 ```
+![image](https://user-images.githubusercontent.com/95208578/207121260-600b7163-06d5-423f-9a3d-3e87b4a62222.png)
+
 >E. Keputusan
 ```
 Dari hasil t-test didapatkan p-value = 0.03024, berada dibawah 0.05. Maka null hypotesis / H0 ditolak.
