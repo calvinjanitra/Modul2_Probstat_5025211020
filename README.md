@@ -127,31 +127,50 @@ Jika :
 
 >A. Buatlah masing masing jenis spesies menjadi  3 subjek "Grup" (grup 1,grup 2,grup 3). Lalu Gambarkan plot kuantil normal untuk setiap kelompok dan lihat apakah ada outlier utama dalam homogenitas varians.
 ```R
-myFile  <- read.table(url("https://rstatisticsandresearch.weebly.com/uploads/1/0/2/6/1026585/onewayanova.txt"))
-dim(myFile)
-head(myFile)
-attach(myFile)
+library(ggplot2)
 
-myFile$V1 <- as.factor(myFile$V1)
-myFile$V1 = factor(myFile$V1,labels = c("Kucing Oren","Kucing Hitam","Kucing Putih","Kucing Oren"))
-
-class(myFile$V1)
-
-group1 <- subset(myFile, V1=="Kucing Oren")
-group2 <- subset(myFile, V1=="Kucing Hitam")
-group3 <- subset(myFile, V1=="Kucing Putih")
+dataa <- read.table(url("https://rstatisticsandresearch.weebly.com/uploads/1/0/2/6/1026585/onewayanova.txt"), h = T)
+dataa$Group <- as.factor(dataa$Group)
+dataa$Group = factor(dataa$Group,labels = c("Kucing Oren", "Kucing Hitam", "Kucing Putih"))
 ```
+```
+class(dataa$Group)
+```
+```
+Group1 <- subset(dataa, Group == "Kucing Oren")
+Group2 <- subset(dataa, Group == "Kucing Hitam")
+Group3 <- subset(dataa, Group == "Kucing Putih")
+```
+```
+qqnorm(Group1$Length)
+qqline(Group1$Length)
+
+qqnorm(Group2$Length)
+qqline(Group2$Length)
+
+qqnorm(Group3$Length)
+qqline(Group3$Length)
+
+```
+![image](https://user-images.githubusercontent.com/95208578/207335223-9760f599-676f-47f4-9ece-845aec72629e.png)
+
+![image](https://user-images.githubusercontent.com/95208578/207335630-9cb644b0-d82a-42f4-90ab-8cf4735bbfc8.png)
+
+![image](https://user-images.githubusercontent.com/95208578/207335713-b832824e-ab84-4902-bc3b-64721fe1c56a.png)
+
 >B. Carilah atau periksalah Homogeneity of variances nya , Berapa nilai p yang didapatkan? , Apa hipotesis dan kesimpulan yang dapat diambil ?
 ```R
-bartlett.test(Length ~ Group, data = dataoneway)
+bartlett.test(Length ~ Group, data = dataa)
 ```
+![image](https://user-images.githubusercontent.com/95208578/207335886-f686cbb0-f701-4bde-882d-4b1b78ab8717.png)
 
 >C. Untuk uji ANOVA (satu arah), buatlah model linier dengan Panjang versus
 Grup dan beri nama model tersebut model 1.
 ```R
-model1 = lm(Length ~ Group, data = dataoneway)
+model1 = lm(Length ~ Group, data = dataa)
 anova(model1)
 ```
+![image](https://user-images.githubusercontent.com/95208578/207336067-598e7e3e-d67e-48ca-9e39-10ea781f6261.png)
 
 >D. Dari Hasil Poin C, Berapakah nilai-p ? , Apa yang dapat Anda simpulkan
 dari H0?
@@ -165,15 +184,20 @@ yang didapatkan apakah satu jenis kucing lebih panjang dari yang lain? Jelaskan.
 ```R
 TukeyHSD(aov(model1))
 ```
+![image](https://user-images.githubusercontent.com/95208578/207336367-67f02f23-2cfb-448f-bc7f-3405d2496500.png)
 
 Dari hasil diatas dapat diketahui p-value tiap 2 jenis grup. Jika p-value lebih kecil dari 0.05, maka panjang kedua grup berbeda, jika p-value lebih dari 0.05 maka panjangnya sama. Berdasarkan hasil diatas dapat disimpulkan kucing putih dan kucing oren memiliki ukuran atau panjang yang sama.
 
 >F. Visualisasikan data dengan ggplot2
 ```R
-ggplot(onewayanova, aes(x = Group, y = Length)) +
-  geom_boxplot(color = c("#00AFBB", "#E7B800", "#FC4E07")) +
-  scale_x_discrete() + xlab("Group") + ylab("Length (cm)")
+install.packages("ggplot2")
+library("ggplot2")
+
+ggplot(dataa, aes(x = Group, y = Length)) + geom_boxplot(fill = "grey80", colour = "black") + scale_x_discrete() + xlab("Treatment Group") + ylab("Length (cm)")
 ```
+
+![image](https://user-images.githubusercontent.com/95208578/207336666-d9b90a50-7516-4d64-bf51-6d67a4fddf8d.png)
+
 ## SOAL 5
 ### Data yang digunakan merupakan hasil eksperimen yang dilakukan untuk mengetahui pengaruh suhu operasi (100˚C, 125˚C dan 150˚C) dan tiga jenis kaca pelat muka (A, B dan C) pada keluaran cahaya tabung osiloskop. Percobaan dilakukan sebanyak 27 kali dan didapat data sebagai berikut: Data Hasil Eksperimen. Dengan data tersebut:
 
