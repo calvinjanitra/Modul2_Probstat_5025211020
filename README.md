@@ -184,14 +184,23 @@ library(readr)
 library(ggplot2)
 library(multcompView)
 library(dplyr)
-
+```
+```
 GTL <- read_csv("data_soal_5.csv")
 head(GTL)
+```
+![image](https://user-images.githubusercontent.com/95208578/207327726-63b3475c-9920-4c73-a5d9-128da49be8c4.png)
 
+```
 str(GTL)
+```
+![image](https://user-images.githubusercontent.com/95208578/207327777-1327371d-5210-4f62-928d-f6f9e03c8cd0.png)
 
+```
 qplot(x = Temp, y = Light, geom = "point", data = GTL) + facet_grid(.~Glass, labeller = label_both)
 ```
+![image](https://user-images.githubusercontent.com/95208578/207327813-82c36eff-e311-404c-b67c-4dc6dfb71bf8.png)
+
 >B. Lakukan uji ANOVA dua arah untuk 2 faktor
 ```R
 GTL$Glass <- as.factor(GTL$Glass)
@@ -201,6 +210,8 @@ str(GTL)
 anova <- aov(Light ~ Glass*Temp_Factor, data = GTL)
 summary(anova)
 ```
+![image](https://user-images.githubusercontent.com/95208578/207327960-d7702eaf-6c16-45da-a651-98657c70be7e.png)
+
 >C. Tampilkan tabel dengan mean dan standar deviasi keluaran cahaya untuk setiap perlakuan (kombinasi kaca pelat muka dan suhu operasi)
 ```R
 data_summary <- group_by(GTL, Glass, Temp) %>%
@@ -208,11 +219,17 @@ data_summary <- group_by(GTL, Glass, Temp) %>%
   arrange(desc(mean))
 print(data_summary)
 ```
+![image](https://user-images.githubusercontent.com/95208578/207328038-aad3f581-07f6-46ad-a029-17c5aff80187.png)
+
 >D. Lakukan uji Tukey
 ```R
 tukey <- TukeyHSD(anova)
 print(tukey)
 ```
+![image](https://user-images.githubusercontent.com/95208578/207328162-6546478d-bdae-41d6-80cb-b3a4279be22a.png)
+
+![image](https://user-images.githubusercontent.com/95208578/207328233-642d1bd0-7f32-4cab-9c02-8e5e152f9193.png)
+
 >E. Gunakan compact letter display untuk menunjukkan perbedaan signifikan
 antara uji Anova dan uji Tukey
 ```R
@@ -222,7 +239,6 @@ print(tukey.cld)
 cld <- as.data.frame.list(tukey.cld$`Glass:Temp_Factor`)
 data_summary$Tukey <- cld$Letters
 print(data_summary)
-
-write.csv("GTL_summary.csv")
-
 ```
+![image](https://user-images.githubusercontent.com/95208578/207328493-45cd0fb3-d4c0-498f-a57f-b2751ab8794b.png)
+
