@@ -19,6 +19,8 @@
 | 9| 77| 100|  
 
 >A. Carilah Standar Deviasi dari data selisih pasangan pengamatan tabel diatas
+
+Masukkan angka-angka ke dalam variabel x dan y dan cari selisihnya disimpan di variabel diff. Setelah itu mencari standar deviasi.
 ```R
 x <- c(78, 75, 67, 77, 70, 72, 78, 74, 77)
 y <- c(100, 95, 70, 90, 90, 90, 89, 90, 100)
@@ -98,6 +100,8 @@ tsum.test(mean.x=3.64, s.x = 1.67, n.x = 19,
 
 
 >C. Lakukan Uji Statistik (df =2)
+
+Untuk melakukan pengujian kita memerlukan function `plotDist()` dari library `mosaic`
 ```R
 install.packages("mosaic")
 library(mosaic)
@@ -107,6 +111,8 @@ plotDist(dist = 't', df = 2, col = "blue")
 ![image](https://user-images.githubusercontent.com/95208578/207121132-5fdacc44-46a4-4cfe-bf15-502af61de415.png)
 
 >D. Nilai Kritikal
+
+Untuk mendapatkan nilai kritikal, kita gunakan `qchisq()`
 ```R
 qchisq(p = 0.05, df = 2, lower.tail = FALSE)
 ```
@@ -126,6 +132,8 @@ Kesimpulannya terdapat perbedaan antara rata-rata saham bandung dengan rata-rata
 Jika :
 
 >A. Buatlah masing masing jenis spesies menjadi  3 subjek "Grup" (grup 1,grup 2,grup 3). Lalu Gambarkan plot kuantil normal untuk setiap kelompok dan lihat apakah ada outlier utama dalam homogenitas varians.
+
+Untuk dapat memperoleh data, kita gunakan function `read.table()` dan membaca dari link yang diberikan. Setelah itu kit amembuat grup untuk masing-masing spesies. 
 ```R
 library(ggplot2)
 
@@ -133,14 +141,17 @@ dataa <- read.table(url("https://rstatisticsandresearch.weebly.com/uploads/1/0/2
 dataa$Group <- as.factor(dataa$Group)
 dataa$Group = factor(dataa$Group,labels = c("Kucing Oren", "Kucing Hitam", "Kucing Putih"))
 ```
+Kita cek apakah data sudah tersimpan pada setiap grup
 ```
 class(dataa$Group)
 ```
+Data dikelompokkan pada setiap group yaitu `Group1` `Group2` dan `Group3`
 ```
 Group1 <- subset(dataa, Group == "Kucing Oren")
 Group2 <- subset(dataa, Group == "Kucing Hitam")
 Group3 <- subset(dataa, Group == "Kucing Putih")
 ```
+Setelah itu, kita gambarkan dengan menggunakan fungsi `qnorm` dan `qqline()`
 ```
 qqnorm(Group1$Length)
 qqline(Group1$Length)
@@ -176,7 +187,7 @@ anova(model1)
 dari H0?
 
 `
-Berdasarkan hasil yang didapatkan pada poin sebelumnya, pada taraf uji 5% didapatkan nilai p-value sebesar 0.0013. Maka, terdapat perbedaan panjang kucing yang signifikan berdasarkan grupnya.
+Berdasarkan hasil yang didapatkan sebelumnya, pada taraf uji 5% didapatkan nilai p-value sebesar 0.0013. Maka, terdapat perbedaan panjang kucing yang signifikan berdasarkan grupnya.
 `
 
 >E. Verifikasilah jawaban model 1 dengan Post-hoc test Tukey HSD, dari nilai p
@@ -202,6 +213,8 @@ ggplot(dataa, aes(x = Group, y = Length)) + geom_boxplot(fill = "grey80", colour
 ### Data yang digunakan merupakan hasil eksperimen yang dilakukan untuk mengetahui pengaruh suhu operasi (100˚C, 125˚C dan 150˚C) dan tiga jenis kaca pelat muka (A, B dan C) pada keluaran cahaya tabung osiloskop. Percobaan dilakukan sebanyak 27 kali dan didapat data sebagai berikut: Data Hasil Eksperimen. Dengan data tersebut:
 
 >A. Buatlah plot sederhana untuk visualisasi data 
+
+Kita install package untuk library yang kita butuhkan
 ```R
 install.packages("multcompView")
 library(readr)
@@ -209,6 +222,7 @@ library(ggplot2)
 library(multcompView)
 library(dplyr)
 ```
+Kita lakukan read dengan function `read_csv()`
 ```
 GTL <- read_csv("data_soal_5.csv")
 head(GTL)
